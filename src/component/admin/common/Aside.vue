@@ -3,7 +3,7 @@
       default-active="2"
       class="el-menu-vertical-demo"
       @open="handleOpen"
-      @close="handleClose"
+      @close="handleClose" style="height:100%"
       >
 
       <!--子菜单标题-->

@@ -20,7 +20,8 @@ import routerConfig from './router/index.js';
 
 //3 非vue的第三方包,方便使用
 import axios from 'axios';
-axios.defaults.baseURL='http://157.122.54.189:9095';
+//浏览器安全机制如果是夸域请求，浏览器是不会把本地cookie信息携带过去的
+axios.defaults.withCredentials=true;
 Vue.prototype.$http=axios;
 
 
@@ -28,17 +29,17 @@ Vue.prototype.$http=axios;
 import api from './js/api-config.js';
 Vue.prototype.$api=api;
 
+//5路由实例
+import beforeEach from './router/beforeEach.js'; //使用一个文件编写路由守卫
+let vueRouter =new VueRouter(routerConfig); //创建路由实例
+vueRouter.beforeEach(beforeEach);
 
-axios.get('http://157.122.54.189:9095/admin/account/islogin')
-    .then(function(res){
-        console.log(res);
-    });
-
+//把根组件渲染到指定视图
 new Vue({
     el:'#app',
     render:function(createElement){  //把根组件渲染到视图
         return createElement(App);
     },
-    router:new VueRouter(routerConfig)
+    router:new VueRouter
 
-})
+});

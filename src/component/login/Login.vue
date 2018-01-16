@@ -82,12 +82,10 @@ export default {
         login() {
             this.$http.post(this.$api.login, this.formLabelAlign).then(res => {
                 if (res.data.status == 0) {
-                    // this.$alert('登陆成功，马上跳转');
-                    //使用了路由插件后就会有router对象
-                    console.log(this.$router);
-                   // this.$router.push('/admin'); //push方法用来跳
-                    //this.$router.go(-3)//go 用来跳到第几张
-                    this.$router.push({ name:'admin'});
+                //使用路由插件后，组件实例就会有两个对象，$router代表路由实例,$router代表url对象,
+                // 我们这里通过$route对象拿取url中的信息，$router对象进行路由跳转等操作
+                let nextPage=this.$route.query.nextPage;
+                    this.$router.push({path:nextPage?nextPage:'/admin'});
                 } else {
                     this.$alert(res.data.message);
                 }
